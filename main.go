@@ -1,0 +1,58 @@
+package main
+
+import (
+	"log"
+	"time"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
+
+	"github.com/kevynlohan05/StockPro/src/configuration/database/mysql"
+	"github.com/kevynlohan05/StockPro/src/controller/routes"
+	controllerUser "github.com/kevynlohan05/StockPro/src/controller/user"
+	repositoryUser "github.com/kevynlohan05/StockPro/src/model/user/repository"
+	userService "github.com/kevynlohan05/StockPro/src/model/user/service"
+)
+
+func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Error loading .env file")
+	}
+
+	// Conexão MySQL
+	database, err := mysql.NewMySQLConnection()
+	if err != nil {
+		log.Fatalf("Error connecting to MySQL, error=%s \n", err.Error())
+		return
+	}
+
+	// Inicializa repositórios e serviços com *sql.DB
+	repoUser := repositoryUser.NewUserRepository(database)
+	userServiceInstance := userService.NewUserDomainService(repoUser)
+	userController := controllerUser.NewUserControllerInterface(userServiceInstance)
+
+	// Setup Gin com CORS
+	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			"http://localhost:5173", // Frontend local
+		},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Authorization"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
+	// Inicializa rotas
+	routes.InitRoutes(&router.RouterGroup, userController)
+
+	// Inicia servidor
+	if err := router.Run(":8080"); err != nil {
+		log.Fatal(err)
+	}
+}
