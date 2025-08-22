@@ -1,6 +1,9 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/kevynlohan05/StockPro/src/model/product/service"
+)
 
 func NewProductControllerInterface(serviceInterface service.ProductDomainService) ProductControllerInterface {
 	return &productControllerInterface{
