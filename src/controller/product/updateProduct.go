@@ -4,6 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (uc *productControllerInterface) UpdateProduct(c *gin.Context) {
+func (pc *productControllerInterface) UpdateProduct(c *gin.Context) {
 
 }

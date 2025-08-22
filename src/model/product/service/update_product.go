@@ -5,6 +5,6 @@ import (
 	productModel "github.com/kevynlohan05/StockPro/src/model/product"
 )
 
-func (pd *productDomainService) UpdateProduct(string, productModel.ProductDomainInterface) *rest_err.RestErr {
+func (pd *productDomainService) UpdateProduct(productId string, productDomain productModel.ProductDomainInterface) *rest_err.RestErr {
 	return nil
 }

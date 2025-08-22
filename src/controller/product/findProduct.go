@@ -4,6 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (uc *productControllerInterface) FindProduct(c *gin.Context) {
+func (pc *productControllerInterface) FindProduct(c *gin.Context) {
 
 }
