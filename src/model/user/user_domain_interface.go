@@ -9,6 +9,8 @@ type UserDomainInterface interface {
 	GetRole() string
 	GetIsActive() bool
 
+	SetID(id string)
+
 	EncryptPassword()
 }
 

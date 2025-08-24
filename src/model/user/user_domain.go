@@ -37,3 +37,7 @@ func (ud *userDomain) GetRole() string {
 func (ud *userDomain) GetIsActive() bool {
 	return ud.isActive
 }
+
+func (ud *userDomain) SetID(id string) {
+	ud.iD = id
+}
