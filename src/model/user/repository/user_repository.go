@@ -18,6 +18,7 @@ type userRepository struct {
 }
 
 type UserRepository interface {
+	LoginUser(email, password string) (userModel.UserDomainInterface, *rest_err.RestErr)
 	CreateUser(userDomain userModel.UserDomainInterface) (userModel.UserDomainInterface, *rest_err.RestErr)
 	UpdateUser(userId string, userDomain userModel.UserDomainInterface) *rest_err.RestErr
 	FindUserById(id string) (userModel.UserDomainInterface, *rest_err.RestErr)

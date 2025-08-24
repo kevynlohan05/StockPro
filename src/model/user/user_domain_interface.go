@@ -1,5 +1,7 @@
 package model
 
+import "github.com/kevynlohan05/StockPro/src/configuration/rest_err"
+
 type UserDomainInterface interface {
 	GetID() string
 	GetName() string
@@ -12,6 +14,7 @@ type UserDomainInterface interface {
 	SetID(id string)
 
 	EncryptPassword()
+	GenerateToken() (string, *rest_err.RestErr)
 }
 
 func NewUserDomain(name, email, password, sector, role string, isActive bool) UserDomainInterface {
@@ -33,5 +36,12 @@ func NewUserUpdateDomain(name, email, password, sector, role string, isActive bo
 		sector:   sector,
 		role:     role,
 		isActive: isActive,
+	}
+}
+
+func NewLoginDomain(email, password string) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
 	}
 }

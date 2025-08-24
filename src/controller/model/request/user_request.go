@@ -16,3 +16,8 @@ type UserUpdateRequest struct {
 	Role     string `json:"role" binding:"omitempty,oneof=admin user"`
 	Active   bool   `json:"active" binding:"omitempty"`
 }
+
+type LoginRequest struct {
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=8"`
+}
