@@ -8,6 +8,8 @@ type UserDomainInterface interface {
 	GetSector() string
 	GetRole() string
 	GetIsActive() bool
+
+	EncryptPassword()
 }
 
 func NewUserDomain(name, email, password, sector, role string, isActive bool) UserDomainInterface {

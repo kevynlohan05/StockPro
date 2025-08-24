@@ -10,6 +10,8 @@ import (
 func (ud *userDomainService) CreateUserServices(userDomain userModel.UserDomainInterface) (userModel.UserDomainInterface, *rest_err.RestErr) {
 	log.Println("Iniciando CreateUserServices service")
 
+	userDomain.EncryptPassword()
+
 	userResult, err := ud.userRepository.CreateUser(userDomain)
 	if err != nil {
 		log.Println("Erro ao criar usuário no banco de dados: ", err)
