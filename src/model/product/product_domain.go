@@ -26,14 +26,18 @@ func (pd *productDomain) GetMark() string {
 	return pd.mark
 }
 
-func (pd *productDomain) GetpurchasePrice() string {
+func (pd *productDomain) GetPurchasePrice() string {
 	return pd.purchasePrice
 }
 
-func (pd *productDomain) GetsalePrice() string {
+func (pd *productDomain) GetSalePrice() string {
 	return pd.salePrice
 }
 
-func (pd *productDomain) Getimage() string {
+func (pd *productDomain) GetImage() string {
 	return pd.image
+}
+
+func (pd *productDomain) SetID(id string) {
+	pd.iD = id
 }

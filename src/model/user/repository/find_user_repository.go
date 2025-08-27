@@ -6,8 +6,8 @@ import (
 
 	"github.com/kevynlohan05/StockPro/src/configuration/rest_err"
 	"github.com/kevynlohan05/StockPro/src/model/converter"
+	"github.com/kevynlohan05/StockPro/src/model/entity"
 	userModel "github.com/kevynlohan05/StockPro/src/model/user"
-	"github.com/kevynlohan05/StockPro/src/model/user/repository/entity"
 )
 
 func (ur *userRepository) FindUserById(id string) (userModel.UserDomainInterface, *rest_err.RestErr) {
@@ -37,7 +37,7 @@ func (ur *userRepository) FindUserById(id string) (userModel.UserDomainInterface
 		return nil, rest_err.NewInternalServerError("Erro ao buscar usuário")
 	}
 
-	return converter.ConvertEntityToDomain(entity), nil
+	return converter.ConvertUserEntityToDomain(entity), nil
 }
 
 func (ur *userRepository) LoginUser(email, password string) (userModel.UserDomainInterface, *rest_err.RestErr) {
@@ -69,5 +69,5 @@ func (ur *userRepository) LoginUser(email, password string) (userModel.UserDomai
 		return nil, rest_err.NewInternalServerError("Erro ao buscar usuário")
 	}
 
-	return converter.ConvertEntityToDomain(entity), nil
+	return converter.ConvertUserEntityToDomain(entity), nil
 }

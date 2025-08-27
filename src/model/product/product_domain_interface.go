@@ -5,9 +5,11 @@ type ProductDomainInterface interface {
 	GetName() string
 	GetDescription() string
 	GetMark() string
-	GetpurchasePrice() string
-	GetsalePrice() string
-	Getimage() string
+	GetPurchasePrice() string
+	GetSalePrice() string
+	GetImage() string
+
+	SetID(id string)
 }
 
 func NewProductDomainService(name, description, mark, purchasePrice, salePrice, image string) ProductDomainInterface {

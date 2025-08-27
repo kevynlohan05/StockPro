@@ -41,5 +41,5 @@ func (ur *userRepository) CreateUser(userDomain userModel.UserDomainInterface) (
 	value.ID = int(id)
 
 	log.Println("Usuário criado com sucesso!")
-	return converter.ConvertEntityToDomain(*value), nil
+	return converter.ConvertUserEntityToDomain(*value), nil
 }

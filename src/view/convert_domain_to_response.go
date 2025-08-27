@@ -31,8 +31,8 @@ func ConvertProductDomainToResponse(productDomain productModel.ProductDomainInte
 		Name:          productDomain.GetName(),
 		Description:   productDomain.GetDescription(),
 		Mark:          productDomain.GetMark(),
-		PurchasePrice: productDomain.GetpurchasePrice(),
-		SalePrice:     productDomain.GetsalePrice(),
-		Image:         productDomain.Getimage(),
+		PurchasePrice: productDomain.GetPurchasePrice(),
+		SalePrice:     productDomain.GetSalePrice(),
+		Image:         productDomain.GetImage(),
 	}
 }
