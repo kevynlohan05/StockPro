@@ -15,8 +15,8 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 		Name          string
 		Description   string
 		Mark          string
-		PurchasePrice string
-		SalePrice     string
+		PurchasePrice float64
+		SalePrice     float64
 		Image         string
 	}
 
@@ -50,10 +50,10 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 	if value.Mark == "" {
 		value.Mark = currentProduct.Mark
 	}
-	if value.PurchasePrice == "" {
+	if value.PurchasePrice == 0 {
 		value.PurchasePrice = currentProduct.PurchasePrice
 	}
-	if value.SalePrice == "" {
+	if value.SalePrice == 0 {
 		value.SalePrice = currentProduct.SalePrice
 	}
 	if value.Images == "" {

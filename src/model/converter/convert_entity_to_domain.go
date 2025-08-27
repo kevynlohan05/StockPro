@@ -37,8 +37,8 @@ func ConvertProductEntityToDomain(entity entity.ProductEntity) productModel.Prod
 		entity.Name,
 		entity.Description,
 		entity.Mark,
-		entity.PurchasePrice,
-		entity.SalePrice,
+		fmt.Sprintf("%.2f", entity.PurchasePrice),
+		fmt.Sprintf("%.2f", entity.SalePrice),
 		images,
 	)
 

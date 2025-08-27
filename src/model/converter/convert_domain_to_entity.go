@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/kevynlohan05/StockPro/src/model/entity"
 	productModel "github.com/kevynlohan05/StockPro/src/model/product"
@@ -37,12 +38,22 @@ func ConvertProductDomainToEntity(productDomain productModel.ProductDomainInterf
 		imagesJSON = []byte("[]") // fallback to empty
 	}
 
+	purchasePrice, err := strconv.ParseFloat(productDomain.GetPurchasePrice(), 64)
+	if err != nil {
+		log.Printf("Erro ao converter PurchasePrice: %v\n", err)
+	}
+
+	salePrice, err := strconv.ParseFloat(productDomain.GetSalePrice(), 64)
+	if err != nil {
+		log.Printf("Erro ao converter SalePrice: %v\n", err)
+	}
+
 	entity := &entity.ProductEntity{
 		Name:          productDomain.GetName(),
 		Description:   productDomain.GetDescription(),
 		Mark:          productDomain.GetMark(),
-		PurchasePrice: productDomain.GetPurchasePrice(),
-		SalePrice:     productDomain.GetSalePrice(),
+		PurchasePrice: purchasePrice,
+		SalePrice:     salePrice,
 		Images:        string(imagesJSON),
 	}
 
