@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kevynlohan05/StockPro/src/configuration/validation"
 	"github.com/kevynlohan05/StockPro/src/controller/model/request"
+	"github.com/kevynlohan05/StockPro/src/controller/model/response"
 	userModel "github.com/kevynlohan05/StockPro/src/model/user"
 )
 
@@ -34,5 +35,9 @@ func (ud *userControllerInterface) LoginUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, token)
+	loginResponse := response.LoginUserResponse{
+		Token: token,
+	}
+
+	c.JSON(http.StatusOK, loginResponse)
 }

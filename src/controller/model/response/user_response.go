@@ -8,3 +8,7 @@ type UserResponse struct {
 	Role   string `json:"role"`
 	Active bool   `json:"active"`
 }
+
+type LoginUserResponse struct {
+	Token string `json:"token"`
+}
