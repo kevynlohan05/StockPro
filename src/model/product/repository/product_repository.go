@@ -7,7 +7,7 @@ import (
 	productModel "github.com/kevynlohan05/StockPro/src/model/product"
 )
 
-func NewUserRepository(db *sql.DB) ProductRepository {
+func NewProductRepository(db *sql.DB) ProductRepository {
 	return &productRepository{
 		db,
 	}

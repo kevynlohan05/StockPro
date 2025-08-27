@@ -15,7 +15,7 @@ func (pc *productControllerInterface) UpdateProduct(c *gin.Context) {
 
 	productId := c.Param("productId")
 
-	var productRequest request.ProductRequest
+	var productRequest request.ProductUpdateRequest
 	if err := c.ShouldBindJSON(&productRequest); err != nil {
 		errRest := validation.ValidateRequestError(err)
 
@@ -29,7 +29,6 @@ func (pc *productControllerInterface) UpdateProduct(c *gin.Context) {
 		productRequest.Mark,
 		productRequest.PurchasePrice,
 		productRequest.SalePrice,
-		productRequest.Image,
 	)
 
 	err := pc.service.UpdateProduct(productId, domain)

@@ -9,10 +9,13 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/kevynlohan05/StockPro/src/configuration/database/mysql"
+	controllerProduct "github.com/kevynlohan05/StockPro/src/controller/product"
 	"github.com/kevynlohan05/StockPro/src/controller/routes"
 	controllerUser "github.com/kevynlohan05/StockPro/src/controller/user"
+	repositoryProduct "github.com/kevynlohan05/StockPro/src/model/product/repository"
+	serviceProduct "github.com/kevynlohan05/StockPro/src/model/product/service"
 	repositoryUser "github.com/kevynlohan05/StockPro/src/model/user/repository"
-	userService "github.com/kevynlohan05/StockPro/src/model/user/service"
+	serviceUser "github.com/kevynlohan05/StockPro/src/model/user/service"
 )
 
 func main() {
@@ -31,11 +34,17 @@ func main() {
 
 	// Inicializa repositórios e serviços com *sql.DB
 	repoUser := repositoryUser.NewUserRepository(database)
-	userServiceInstance := userService.NewUserDomainService(repoUser)
+	userServiceInstance := serviceUser.NewUserDomainService(repoUser)
 	userController := controllerUser.NewUserControllerInterface(userServiceInstance)
+
+	repoProduct := repositoryProduct.NewProductRepository(database)
+	productServiceInstance := serviceProduct.NewProductDomainService(repoProduct)
+	productController := controllerProduct.NewProductControllerInterface(productServiceInstance)
 
 	// Setup Gin com CORS
 	router := gin.Default()
+
+	router.Static("/uploads", "./uploads")
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
@@ -49,7 +58,7 @@ func main() {
 	}))
 
 	// Inicializa rotas
-	routes.InitRoutes(&router.RouterGroup, userController)
+	routes.InitRoutes(&router.RouterGroup, userController, productController)
 
 	// Inicia servidor
 	if err := router.Run(":8080"); err != nil {

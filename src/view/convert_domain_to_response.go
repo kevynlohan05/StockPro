@@ -33,6 +33,6 @@ func ConvertProductDomainToResponse(productDomain productModel.ProductDomainInte
 		Mark:          productDomain.GetMark(),
 		PurchasePrice: productDomain.GetPurchasePrice(),
 		SalePrice:     productDomain.GetSalePrice(),
-		Image:         productDomain.GetImage(),
+		Images:        productDomain.GetImages(),
 	}
 }

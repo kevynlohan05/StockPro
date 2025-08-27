@@ -1,7 +1,9 @@
 package converter
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/kevynlohan05/StockPro/src/model/entity"
 	productModel "github.com/kevynlohan05/StockPro/src/model/product"
@@ -29,13 +31,19 @@ func ConvertUserDomainToEntity(userDomain userModel.UserDomainInterface) *entity
 }
 
 func ConvertProductDomainToEntity(productDomain productModel.ProductDomainInterface) *entity.ProductEntity {
+	imagesJSON, err := json.Marshal(productDomain.GetImages())
+	if err != nil {
+		log.Printf("Error marshaling attachment URLs: %v\n", err)
+		imagesJSON = []byte("[]") // fallback to empty
+	}
+
 	entity := &entity.ProductEntity{
 		Name:          productDomain.GetName(),
 		Description:   productDomain.GetDescription(),
 		Mark:          productDomain.GetMark(),
 		PurchasePrice: productDomain.GetPurchasePrice(),
 		SalePrice:     productDomain.GetSalePrice(),
-		Image:         productDomain.GetDescription(),
+		Images:        string(imagesJSON),
 	}
 
 	if productDomain.GetID() != "" {

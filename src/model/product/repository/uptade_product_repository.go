@@ -21,7 +21,7 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 	}
 
 	queryFind := `
-		SELECT id, name, description, mark, purchase_price, sale_price, image 
+		SELECT name, description, mark, purchase_price, sale_price, image 
 		FROM products WHERE id = ?
 	`
 	err := pr.db.QueryRow(queryFind, productId).Scan(
@@ -36,6 +36,8 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 		log.Println("Erro ao buscar produto existente: ", err)
 		return rest_err.NewInternalServerError("Erro ao buscar produto existente")
 	}
+
+	log.Println(&currentProduct.Image)
 
 	value := converter.ConvertProductDomainToEntity(productDomain)
 
@@ -54,8 +56,8 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 	if value.SalePrice == "" {
 		value.SalePrice = currentProduct.SalePrice
 	}
-	if value.Image == "" {
-		value.Image = currentProduct.Image
+	if value.Images == "" {
+		value.Images = currentProduct.Image
 	}
 
 	queryUpdate := `
@@ -65,7 +67,7 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 			mark = ?,
 			purchase_price = ?,
 			sale_price = ?,
-			image = ?,
+			image = ?
 		WHERE id = ?
 	`
 	result, err := pr.db.Exec(queryUpdate,
@@ -74,7 +76,7 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 		value.Mark,
 		value.PurchasePrice,
 		value.SalePrice,
-		value.Image,
+		value.Images,
 		productId)
 
 	if err != nil {

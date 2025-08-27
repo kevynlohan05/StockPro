@@ -7,5 +7,5 @@ type ProductEntity struct {
 	Mark          string `json:"mark"`
 	PurchasePrice string `json:"purchasePrice"`
 	SalePrice     string `json:"salePrice"`
-	Image         string `json:"image"`
+	Images        string `json:"image"`
 }

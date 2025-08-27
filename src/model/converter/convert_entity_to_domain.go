@@ -1,7 +1,9 @@
 package converter
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/kevynlohan05/StockPro/src/model/entity"
 	productModel "github.com/kevynlohan05/StockPro/src/model/product"
@@ -24,13 +26,20 @@ func ConvertUserEntityToDomain(entity entity.UserEntity) userModel.UserDomainInt
 }
 
 func ConvertProductEntityToDomain(entity entity.ProductEntity) productModel.ProductDomainInterface {
+	var images []string
+	err := json.Unmarshal([]byte(entity.Images), &images)
+	if err != nil {
+		log.Printf("Error unmarshaling images: %v\n", err)
+		images = []string{} // fallback to empty
+	}
+
 	productDomain := productModel.NewProductDomainService(
 		entity.Name,
 		entity.Description,
 		entity.Mark,
 		entity.PurchasePrice,
 		entity.SalePrice,
-		entity.Image,
+		images,
 	)
 
 	productDomain.SetID(fmt.Sprintf("%d", entity.ID))

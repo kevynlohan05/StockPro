@@ -7,29 +7,28 @@ type ProductDomainInterface interface {
 	GetMark() string
 	GetPurchasePrice() string
 	GetSalePrice() string
-	GetImage() string
+	GetImages() []string
 
 	SetID(id string)
 }
 
-func NewProductDomainService(name, description, mark, purchasePrice, salePrice, image string) ProductDomainInterface {
+func NewProductDomainService(name, description, mark, purchasePrice, salePrice string, images []string) ProductDomainInterface {
 	return &productDomain{
 		name:          name,
 		description:   description,
 		mark:          mark,
 		purchasePrice: purchasePrice,
 		salePrice:     salePrice,
-		image:         image,
+		images:        images,
 	}
 }
 
-func NewProductUpdateDomainService(name, description, mark, purchasePrice, salePrice, image string) ProductDomainInterface {
+func NewProductUpdateDomainService(name, description, mark, purchasePrice, salePrice string) ProductDomainInterface {
 	return &productDomain{
 		name:          name,
 		description:   description,
 		mark:          mark,
 		purchasePrice: purchasePrice,
 		salePrice:     salePrice,
-		image:         image,
 	}
 }

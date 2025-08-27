@@ -31,7 +31,7 @@ func (pr *productRepository) CreateProduct(productDomain productModel.ProductDom
 		value.Mark,
 		value.PurchasePrice,
 		value.SalePrice,
-		value.Image,
+		value.Images,
 	)
 
 	if err != nil {

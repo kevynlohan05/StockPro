@@ -7,7 +7,7 @@ type productDomain struct {
 	mark          string
 	purchasePrice string
 	salePrice     string
-	image         string
+	images        []string
 }
 
 func (pd *productDomain) GetID() string {
@@ -34,8 +34,8 @@ func (pd *productDomain) GetSalePrice() string {
 	return pd.salePrice
 }
 
-func (pd *productDomain) GetImage() string {
-	return pd.image
+func (pd *productDomain) GetImages() []string {
+	return pd.images
 }
 
 func (pd *productDomain) SetID(id string) {

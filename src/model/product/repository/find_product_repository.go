@@ -29,7 +29,7 @@ func (pr *productRepository) FindProductById(productId string) (productModel.Pro
 		&entity.Mark,
 		&entity.PurchasePrice,
 		&entity.SalePrice,
-		&entity.Image,
+		&entity.Images,
 	)
 
 	if err != nil {
