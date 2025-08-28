@@ -8,6 +8,7 @@ import (
 
 	"github.com/kevynlohan05/StockPro/src/model/entity"
 	productModel "github.com/kevynlohan05/StockPro/src/model/product"
+	stockModel "github.com/kevynlohan05/StockPro/src/model/stock"
 	userModel "github.com/kevynlohan05/StockPro/src/model/user"
 )
 
@@ -60,6 +61,25 @@ func ConvertProductDomainToEntity(productDomain productModel.ProductDomainInterf
 	if productDomain.GetID() != "" {
 		var id int
 		if _, err := fmt.Sscanf(productDomain.GetID(), "%d", &id); err == nil {
+			entity.ID = id
+		}
+	}
+
+	return entity
+}
+
+func ConvertStockDomainToEntity(stockDomain stockModel.StockDomainInterface) *entity.StockEntity {
+	entity := &entity.StockEntity{
+		ProductID: stockDomain.GetProductID(),
+		UserID:    stockDomain.GetUserID(),
+		Type:      stockDomain.GetStockType(),
+		Quantity:  stockDomain.GetQuantity(),
+		Reason:    stockDomain.GetReason(),
+	}
+
+	if stockDomain.GetID() != "" {
+		var id int
+		if _, err := fmt.Sscanf(stockDomain.GetID(), "%d", &id); err == nil {
 			entity.ID = id
 		}
 	}

@@ -7,6 +7,7 @@ import (
 
 	"github.com/kevynlohan05/StockPro/src/model/entity"
 	productModel "github.com/kevynlohan05/StockPro/src/model/product"
+	stockModel "github.com/kevynlohan05/StockPro/src/model/stock"
 	userModel "github.com/kevynlohan05/StockPro/src/model/user"
 )
 
@@ -45,4 +46,18 @@ func ConvertProductEntityToDomain(entity entity.ProductEntity) productModel.Prod
 	productDomain.SetID(fmt.Sprintf("%d", entity.ID))
 
 	return productDomain
+}
+
+func ConvertStockEntityToDomain(entity entity.StockEntity) stockModel.StockDomainInterface {
+	stockDomain := stockModel.NewStockDomain(
+		entity.ProductID,
+		entity.UserID,
+		entity.Type,
+		entity.Quantity,
+		entity.Reason,
+	)
+
+	stockDomain.SetID(fmt.Sprintf("%d", entity.ID))
+
+	return stockDomain
 }

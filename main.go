@@ -11,9 +11,12 @@ import (
 	"github.com/kevynlohan05/StockPro/src/configuration/database/mysql"
 	controllerProduct "github.com/kevynlohan05/StockPro/src/controller/product"
 	"github.com/kevynlohan05/StockPro/src/controller/routes"
+	controllerStock "github.com/kevynlohan05/StockPro/src/controller/stock"
 	controllerUser "github.com/kevynlohan05/StockPro/src/controller/user"
 	repositoryProduct "github.com/kevynlohan05/StockPro/src/model/product/repository"
 	serviceProduct "github.com/kevynlohan05/StockPro/src/model/product/service"
+	repositoryStock "github.com/kevynlohan05/StockPro/src/model/stock/repository"
+	serviceStock "github.com/kevynlohan05/StockPro/src/model/stock/service"
 	repositoryUser "github.com/kevynlohan05/StockPro/src/model/user/repository"
 	serviceUser "github.com/kevynlohan05/StockPro/src/model/user/service"
 )
@@ -41,6 +44,10 @@ func main() {
 	productServiceInstance := serviceProduct.NewProductDomainService(repoProduct)
 	productController := controllerProduct.NewProductControllerInterface(productServiceInstance)
 
+	repoStock := repositoryStock.NewStockRepository(database)
+	stockServiceInstance := serviceStock.NewStockDomainService(repoStock)
+	stockController := controllerStock.NewStockControllerInterface(stockServiceInstance)
+
 	// Setup Gin com CORS
 	router := gin.Default()
 
@@ -58,7 +65,7 @@ func main() {
 	}))
 
 	// Inicializa rotas
-	routes.InitRoutes(&router.RouterGroup, userController, productController)
+	routes.InitRoutes(&router.RouterGroup, userController, productController, stockController)
 
 	// Inicia servidor
 	if err := router.Run(":8080"); err != nil {
