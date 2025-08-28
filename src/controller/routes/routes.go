@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	controllerProduct "github.com/kevynlohan05/StockPro/src/controller/product"
+	controllerSale "github.com/kevynlohan05/StockPro/src/controller/sale"
 	controllerStock "github.com/kevynlohan05/StockPro/src/controller/stock"
 	controllerUser "github.com/kevynlohan05/StockPro/src/controller/user"
 	userModel "github.com/kevynlohan05/StockPro/src/model/user"
@@ -14,6 +15,7 @@ func InitRoutes(
 	userController controllerUser.UserControllerInterface,
 	productController controllerProduct.ProductControllerInterface,
 	stockController controllerStock.StockControllerInterface,
+	saleControllert controllerSale.SaleControllerInterface,
 ) {
 	// --- User routes ---
 	r.POST("/user/login", userController.LoginUser)
@@ -30,4 +32,7 @@ func InitRoutes(
 
 	// --- Stock routes ---
 	r.POST("/stock/createStockMovement", userModel.VerifyTokenMiddleware, stockController.CreateStockMovement)
+
+	// --- Sale routes ---
+	r.POST("/sale/createSale", userModel.VerifyTokenMiddleware, saleControllert.CreateSale)
 }
