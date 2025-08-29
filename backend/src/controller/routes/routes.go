@@ -23,6 +23,7 @@ func InitRoutes(
 	r.POST("/user/login", userController.LoginUser)
 	r.POST("/user/createUser", userController.CreateUser)
 	r.GET("/user/getUserById/:userId", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, userController.FindUser)
+	r.GET("/user/getAllUsers", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, userController.FindAllUsers)
 	r.PUT("/user/updateUser/:userId", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, userController.UpdateUser)
 	r.DELETE("/user/deleteUser/:userId", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, userController.DeleteUser)
 

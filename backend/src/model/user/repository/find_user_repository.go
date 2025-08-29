@@ -71,3 +71,42 @@ func (ur *userRepository) LoginUser(email, password string) (userModel.UserDomai
 
 	return converter.ConvertUserEntityToDomain(entity), nil
 }
+
+func (ur *userRepository) FindAllUsers() ([]userModel.UserDomainInterface, *rest_err.RestErr) {
+	log.Println("Iniciando FindAllUsers repository")
+
+	query := `SELECT id, name, email, sector, role, is_active FROM users`
+
+	rows, err := ur.db.Query(query)
+	if err != nil {
+		log.Println("Erro ao executar query: ", err)
+		return nil, rest_err.NewInternalServerError("Erro ao buscar usuários")
+	}
+	defer rows.Close()
+
+	var users []userModel.UserDomainInterface
+
+	for rows.Next() {
+		var entity entity.UserEntity
+		err := rows.Scan(
+			&entity.ID,
+			&entity.Name,
+			&entity.Email,
+			&entity.Sector,
+			&entity.Role,
+			&entity.IsActive,
+		)
+		if err != nil {
+			log.Println("Erro ao escanear resultado da query: ", err)
+			return nil, rest_err.NewInternalServerError("Erro ao buscar usuários")
+		}
+		users = append(users, converter.ConvertUserEntityToDomain(entity))
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Println("Erro após iterar sobre as linhas: ", err)
+		return nil, rest_err.NewInternalServerError("Erro ao buscar usuários")
+	}
+
+	return users, nil
+}
