@@ -48,8 +48,8 @@ func (r *saleRepository) CreateSaleTransaction(sale saleModel.SaleDomainInterfac
 		}
 	}
 
-	_, err = tx.Exec(`INSERT INTO cash (sale_id, user_id, type, value, description) VALUES (?, ?, 'entrada', ?, ?)`,
-		saleID, sale.GetUserID(), sale.GetTotal(), "Venda ID "+strconv.FormatInt(saleID, 10))
+	_, err = tx.Exec(`INSERT INTO cash (transaction_id, user_id, type, value, description) VALUES (?, ?, 'entrada', ?, ?)`,
+		saleID, sale.GetUserID(), sale.GetTotal(), "Sale")
 	if err != nil {
 		log.Println("Erro inserir cash:", err)
 		return rest_err.NewInternalServerError("Erro ao registrar entrada no caixa")

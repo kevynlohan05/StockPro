@@ -9,18 +9,23 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/kevynlohan05/StockPro/src/configuration/database/mysql"
+	controllerBuy "github.com/kevynlohan05/StockPro/src/controller/buy"
 	controllerProduct "github.com/kevynlohan05/StockPro/src/controller/product"
 	"github.com/kevynlohan05/StockPro/src/controller/routes"
 	controllerSale "github.com/kevynlohan05/StockPro/src/controller/sale"
 	controllerStock "github.com/kevynlohan05/StockPro/src/controller/stock"
 	controllerUser "github.com/kevynlohan05/StockPro/src/controller/user"
+
+	repositoryBuy "github.com/kevynlohan05/StockPro/src/model/buy/repository"
 	repositoryProduct "github.com/kevynlohan05/StockPro/src/model/product/repository"
-	serviceProduct "github.com/kevynlohan05/StockPro/src/model/product/service"
 	repositorySale "github.com/kevynlohan05/StockPro/src/model/sale/repository"
-	serviceSale "github.com/kevynlohan05/StockPro/src/model/sale/service"
 	repositoryStock "github.com/kevynlohan05/StockPro/src/model/stock/repository"
-	serviceStock "github.com/kevynlohan05/StockPro/src/model/stock/service"
 	repositoryUser "github.com/kevynlohan05/StockPro/src/model/user/repository"
+
+	serviceBuy "github.com/kevynlohan05/StockPro/src/model/buy/service"
+	serviceProduct "github.com/kevynlohan05/StockPro/src/model/product/service"
+	serviceSale "github.com/kevynlohan05/StockPro/src/model/sale/service"
+	serviceStock "github.com/kevynlohan05/StockPro/src/model/stock/service"
 	serviceUser "github.com/kevynlohan05/StockPro/src/model/user/service"
 )
 
@@ -55,6 +60,10 @@ func main() {
 	saleServiceInstance := serviceSale.NewSaleDomainService(repoSale, repoStock)
 	saleController := controllerSale.NewSaleControllerInterface(saleServiceInstance)
 
+	repoBuy := repositoryBuy.NewBuyRepository(database)
+	buyServiceInstance := serviceBuy.NewBuyDomainService(repoBuy, repoStock)
+	buyController := controllerBuy.NewBuyControllerInterface(buyServiceInstance)
+
 	// Setup Gin com CORS
 	router := gin.Default()
 
@@ -72,7 +81,7 @@ func main() {
 	}))
 
 	// Inicializa rotas
-	routes.InitRoutes(&router.RouterGroup, userController, productController, stockController, saleController)
+	routes.InitRoutes(&router.RouterGroup, userController, productController, stockController, saleController, buyController)
 
 	// Inicia servidor
 	if err := router.Run(":8080"); err != nil {

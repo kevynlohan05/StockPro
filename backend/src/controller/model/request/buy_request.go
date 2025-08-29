@@ -1,7 +1,7 @@
 package request
 
 type BuyRequest struct {
-	UserID        string           `json:"user_id" binding:"required"`
+	UserID        int              `json:"user_id" binding:"required"`
 	PaymentMethod string           `json:"payment_method" binding:"required"`
 	Items         []BuyItemRequest `json:"items" binding:"required,dive,required"`
 	Observation   string           `json:"observation"`

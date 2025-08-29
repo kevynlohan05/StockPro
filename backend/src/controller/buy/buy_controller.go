@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/gin-gonic/gin"
 	"github.com/kevynlohan05/StockPro/src/model/buy/service"
 )
 
@@ -15,4 +16,5 @@ type buyControllerInterface struct {
 }
 
 type BuyControllerInterface interface {
+	CreateBuy(c *gin.Context)
 }
