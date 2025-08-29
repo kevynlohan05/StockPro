@@ -3,7 +3,6 @@ package converter
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"strconv"
 
 	"github.com/kevynlohan05/StockPro/src/model/entity"
@@ -33,21 +32,15 @@ func ConvertUserDomainToEntity(userDomain userModel.UserDomainInterface) *entity
 }
 
 func ConvertProductDomainToEntity(productDomain productModel.ProductDomainInterface) *entity.ProductEntity {
-	imagesJSON, err := json.Marshal(productDomain.GetImages())
-	if err != nil {
-		log.Printf("Error marshaling attachment URLs: %v\n", err)
-		imagesJSON = []byte("[]") // fallback to empty
+	var imagesJSON []byte
+	if imgs := productDomain.GetImages(); imgs != nil && len(imgs) > 0 {
+		imagesJSON, _ = json.Marshal(imgs)
+	} else {
+		imagesJSON = nil
 	}
 
-	purchasePrice, err := strconv.ParseFloat(productDomain.GetPurchasePrice(), 64)
-	if err != nil {
-		log.Printf("Erro ao converter PurchasePrice: %v\n", err)
-	}
-
-	salePrice, err := strconv.ParseFloat(productDomain.GetSalePrice(), 64)
-	if err != nil {
-		log.Printf("Erro ao converter SalePrice: %v\n", err)
-	}
+	purchasePrice, _ := strconv.ParseFloat(productDomain.GetPurchasePrice(), 64)
+	salePrice, _ := strconv.ParseFloat(productDomain.GetSalePrice(), 64)
 
 	entity := &entity.ProductEntity{
 		Name:          productDomain.GetName(),
@@ -55,14 +48,16 @@ func ConvertProductDomainToEntity(productDomain productModel.ProductDomainInterf
 		Mark:          productDomain.GetMark(),
 		PurchasePrice: purchasePrice,
 		SalePrice:     salePrice,
-		Images:        string(imagesJSON),
+	}
+
+	if imagesJSON != nil {
+		entity.Images = string(imagesJSON)
 	}
 
 	if productDomain.GetID() != "" {
 		var id int
-		if _, err := fmt.Sscanf(productDomain.GetID(), "%d", &id); err == nil {
-			entity.ID = id
-		}
+		fmt.Sscanf(productDomain.GetID(), "%d", &id)
+		entity.ID = id
 	}
 
 	return entity

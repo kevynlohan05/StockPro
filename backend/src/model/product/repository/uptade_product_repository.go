@@ -17,7 +17,7 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 		Mark          string
 		PurchasePrice float64
 		SalePrice     float64
-		Image         string
+		Images        string
 	}
 
 	queryFind := `
@@ -30,14 +30,12 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 		&currentProduct.Mark,
 		&currentProduct.PurchasePrice,
 		&currentProduct.SalePrice,
-		&currentProduct.Image,
+		&currentProduct.Images,
 	)
 	if err != nil {
 		log.Println("Erro ao buscar produto existente: ", err)
 		return rest_err.NewInternalServerError("Erro ao buscar produto existente")
 	}
-
-	log.Println(&currentProduct.Image)
 
 	value := converter.ConvertProductDomainToEntity(productDomain)
 
@@ -56,8 +54,8 @@ func (pr *productRepository) UpdateProduct(productId string, productDomain produ
 	if value.SalePrice == 0 {
 		value.SalePrice = currentProduct.SalePrice
 	}
-	if value.Images == "" {
-		value.Images = currentProduct.Image
+	if value.Images == "" || value.Images == "[]" {
+		value.Images = currentProduct.Images
 	}
 
 	queryUpdate := `
