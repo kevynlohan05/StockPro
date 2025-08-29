@@ -33,7 +33,7 @@ func ConvertUserDomainToEntity(userDomain userModel.UserDomainInterface) *entity
 
 func ConvertProductDomainToEntity(productDomain productModel.ProductDomainInterface) *entity.ProductEntity {
 	var imagesJSON []byte
-	if imgs := productDomain.GetImages(); imgs != nil && len(imgs) > 0 {
+	if imgs := productDomain.GetImages(); len(imgs) > 0 {
 		imagesJSON, _ = json.Marshal(imgs)
 	} else {
 		imagesJSON = nil
