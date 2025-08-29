@@ -1,12 +1,13 @@
 package model
 
 type StockDomain struct {
-	iD        string
-	productID int
-	userID    int
-	stockType string
-	quantity  int
-	reason    string
+	iD         string
+	productID  int
+	userID     int
+	stockType  string
+	quantity   int
+	reason     string
+	created_at int
 }
 
 func (sd *StockDomain) GetID() string {
@@ -31,6 +32,10 @@ func (sd *StockDomain) GetQuantity() int {
 
 func (sd *StockDomain) GetReason() string {
 	return sd.reason
+}
+
+func (sd *StockDomain) GetCreatedAt() int {
+	return sd.created_at
 }
 
 func (sd *StockDomain) SetID(id string) {

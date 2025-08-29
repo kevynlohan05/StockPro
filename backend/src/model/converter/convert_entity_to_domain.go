@@ -49,12 +49,13 @@ func ConvertProductEntityToDomain(entity entity.ProductEntity) productModel.Prod
 }
 
 func ConvertStockEntityToDomain(entity entity.StockEntity) stockModel.StockDomainInterface {
-	stockDomain := stockModel.NewStockDomain(
+	stockDomain := stockModel.NewStockEntity(
 		entity.ProductID,
 		entity.UserID,
 		entity.Type,
 		entity.Quantity,
 		entity.Reason,
+		entity.CreatedAt,
 	)
 
 	stockDomain.SetID(fmt.Sprintf("%d", entity.ID))
