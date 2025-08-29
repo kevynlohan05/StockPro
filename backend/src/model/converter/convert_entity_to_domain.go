@@ -62,3 +62,11 @@ func ConvertStockEntityToDomain(entity entity.StockEntity) stockModel.StockDomai
 
 	return stockDomain
 }
+
+func ConvertStockQuantityEntityToDomain(entity entity.StockQuantityEntity) stockModel.StockQuantityDomainInterface {
+	stockDomain := stockModel.NewStockQuantityEntity(
+		entity.ProductID,
+		entity.Quantity,
+	)
+	return stockDomain
+}

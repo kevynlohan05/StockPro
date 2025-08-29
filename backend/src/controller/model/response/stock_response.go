@@ -9,3 +9,8 @@ type StockMovementResponse struct {
 	Reason    string `json:"reason"`
 	CreatedAt int    `json:"created_at"`
 }
+
+type StockResponse struct {
+	ProductID int `json:"product_id"`
+	Quantity  int `json:"quantity"`
+}

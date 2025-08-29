@@ -17,3 +17,14 @@ func (s *stockDomainService) FindMovementsStock() ([]stockModel.StockDomainInter
 
 	return movements, nil
 }
+
+func (s *stockDomainService) FindStock() ([]stockModel.StockQuantityDomainInterface, *rest_err.RestErr) {
+	log.Println("Iniciando FindMovementsStock service!")
+
+	stock, err := s.stockRepository.FindStockQuantity()
+	if err != nil {
+		return nil, err
+	}
+
+	return stock, nil
+}

@@ -52,3 +52,13 @@ func ConvertMovementStockDomainToResponse(movementDomain stockModel.StockDomainI
 		CreatedAt: movementDomain.GetCreatedAt(),
 	}
 }
+
+func ConvertStockDomainToResponse(stockDomain stockModel.StockQuantityDomainInterface) response.StockResponse {
+
+	log.Println("Convertendo stockDomain para stockResponse")
+
+	return response.StockResponse{
+		ProductID: stockDomain.GetProductIDStock(),
+		Quantity:  stockDomain.GetQuantityStock(),
+	}
+}

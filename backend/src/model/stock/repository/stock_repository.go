@@ -19,4 +19,5 @@ type StockRepository interface {
 	CreateStockMovement(stockDomain stockModel.StockDomainInterface) *rest_err.RestErr
 	CheckStock(productID, quantity int) (bool, *rest_err.RestErr)
 	FindMovementsStock() ([]stockModel.StockDomainInterface, *rest_err.RestErr)
+	FindStockQuantity() ([]stockModel.StockQuantityDomainInterface, *rest_err.RestErr)
 }

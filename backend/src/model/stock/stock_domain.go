@@ -1,6 +1,6 @@
 package model
 
-type StockDomain struct {
+type movementStockDomain struct {
 	iD         string
 	productID  int
 	userID     int
@@ -10,34 +10,47 @@ type StockDomain struct {
 	created_at int
 }
 
-func (sd *StockDomain) GetID() string {
-	return sd.iD
+type stockDomain struct {
+	productID int
+	quantity  int
 }
 
-func (sd *StockDomain) GetProductID() int {
+func (sd *stockDomain) GetProductIDStock() int {
 	return sd.productID
 }
 
-func (sd *StockDomain) GetUserID() int {
-	return sd.userID
-}
-
-func (sd *StockDomain) GetStockType() string {
-	return sd.stockType
-}
-
-func (sd *StockDomain) GetQuantity() int {
+func (sd *stockDomain) GetQuantityStock() int {
 	return sd.quantity
 }
 
-func (sd *StockDomain) GetReason() string {
+func (sd *movementStockDomain) GetID() string {
+	return sd.iD
+}
+
+func (sd *movementStockDomain) GetProductID() int {
+	return sd.productID
+}
+
+func (sd *movementStockDomain) GetUserID() int {
+	return sd.userID
+}
+
+func (sd *movementStockDomain) GetStockType() string {
+	return sd.stockType
+}
+
+func (sd *movementStockDomain) GetQuantity() int {
+	return sd.quantity
+}
+
+func (sd *movementStockDomain) GetReason() string {
 	return sd.reason
 }
 
-func (sd *StockDomain) GetCreatedAt() int {
+func (sd *movementStockDomain) GetCreatedAt() int {
 	return sd.created_at
 }
 
-func (sd *StockDomain) SetID(id string) {
+func (sd *movementStockDomain) SetID(id string) {
 	sd.iD = id
 }

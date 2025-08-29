@@ -33,3 +33,27 @@ func (sc *stockControllerInterface) FindMovementsStock(c *gin.Context) {
 
 	c.JSON(http.StatusOK, movementsResponse)
 }
+
+func (sc *stockControllerInterface) FindStock(c *gin.Context) {
+	log.Println("Iniciando FindStock controller!")
+
+	stockDomain, err := sc.service.FindStock()
+	if err != nil {
+		c.JSON(err.Code, err)
+		return
+	}
+
+	if len(stockDomain) == 0 {
+		errorMessage := rest_err.NewNotFoundError("Não foi encontrado nenhum produto no estoque.")
+		c.JSON(errorMessage.Code, errorMessage)
+		return
+	}
+
+	var stockResponse []response.StockResponse
+
+	for _, stock := range stockDomain {
+		stockResponse = append(stockResponse, view.ConvertStockDomainToResponse(stock))
+	}
+
+	c.JSON(http.StatusOK, stockResponse)
+}

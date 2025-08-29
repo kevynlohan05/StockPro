@@ -9,3 +9,8 @@ type StockEntity struct {
 	Reason    string `json:"reason"`
 	CreatedAt int    `json:"created_at" gorm:"autoCreateTime:milli"`
 }
+
+type StockQuantityEntity struct {
+	ProductID int `json:"product_id"`
+	Quantity  int `json:"quantity"`
+}

@@ -57,3 +57,45 @@ func (sr *stockRepository) FindMovementsStock() ([]stockModel.StockDomainInterfa
 
 	return movements_stock, nil
 }
+
+func (sr *stockRepository) FindStockQuantity() ([]stockModel.StockQuantityDomainInterface, *rest_err.RestErr) {
+	log.Println("Iniciando FindStockQuantity respository!")
+
+	query := `
+		SELECT product_id, quantity
+		FROM stock
+	`
+
+	rows, err := sr.db.Query(query)
+	if err != nil {
+		log.Println("Erro ao executar query: ", err)
+		return nil, rest_err.NewInternalServerError("Erro ao buscar stock")
+	}
+
+	defer rows.Close()
+
+	var stock []stockModel.StockQuantityDomainInterface
+
+	for rows.Next() {
+		var entity entity.StockQuantityEntity
+
+		err := rows.Scan(
+			&entity.ProductID,
+			&entity.Quantity,
+		)
+
+		if err != nil {
+			log.Println("Erro ao escanear resultado da query: ", err)
+			return nil, rest_err.NewInternalServerError("Erro ao buscar stock")
+		}
+
+		stock = append(stock, converter.ConvertStockQuantityEntityToDomain(entity))
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Println("Erro após iterar sobre linhas: ", err)
+		return nil, rest_err.NewInternalServerError("Erro ao buscar stock")
+	}
+
+	return stock, nil
+}

@@ -37,6 +37,7 @@ func InitRoutes(
 	// --- Stock routes ---
 	r.POST("/stock/createStockMovement", userModel.VerifyTokenMiddleware, stockController.CreateStockMovement)
 	r.GET("/stock/getAllMovements", userModel.VerifyTokenMiddleware, stockController.FindMovementsStock)
+	r.GET("/stock/getStock", userModel.VerifyTokenMiddleware, stockController.FindStock)
 
 	// --- Sale routes ---
 	r.POST("/sale/createSale", userModel.VerifyTokenMiddleware, saleControllert.CreateSale)

@@ -14,6 +14,7 @@ func NewStockControllerInterface(serviceInterface service.StockDomainService) St
 type StockControllerInterface interface {
 	CreateStockMovement(c *gin.Context)
 	FindMovementsStock(c *gin.Context)
+	FindStock(c *gin.Context)
 }
 
 type stockControllerInterface struct {

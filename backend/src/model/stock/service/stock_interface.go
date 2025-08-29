@@ -17,4 +17,5 @@ type stockDomainService struct {
 type StockDomainService interface {
 	CreateStockMovementService(stockDomain stockModel.StockDomainInterface) *rest_err.RestErr
 	FindMovementsStock() ([]stockModel.StockDomainInterface, *rest_err.RestErr)
+	FindStock() ([]stockModel.StockQuantityDomainInterface, *rest_err.RestErr)
 }
