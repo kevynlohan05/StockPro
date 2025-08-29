@@ -26,7 +26,6 @@ func (r *saleRepository) CreateSaleTransaction(sale saleModel.SaleDomainInterfac
 	sale.SetID(strconv.FormatInt(saleID, 10))
 
 	for _, item := range sale.GetItems() {
-		// Inserir sales_items
 		_, err := tx.Exec(`INSERT INTO sales_items (sale_id, product_id, quantity, price) VALUES (?, ?, ?, ?)`,
 			saleID, item.GetProductID(), item.GetQuantity(), item.GetPrice())
 		if err != nil {
