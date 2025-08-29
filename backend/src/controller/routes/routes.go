@@ -30,6 +30,7 @@ func InitRoutes(
 	// --- Product routes ---
 	r.POST("/product/createProduct", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, productController.CreateProduct)
 	r.GET("/product/getProductById/:productId", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, productController.FindProduct)
+	r.GET("/product/getAllProducts", userModel.VerifyTokenMiddleware, productController.FindAllProducts)
 	r.PUT("/product/updateProduct/:productId", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, productController.UpdateProduct)
 	r.DELETE("/product/deleteProduct/:productId", userModel.VerifyTokenMiddleware, userModel.AdminOnlyMiddleware, productController.DeleteProduct)
 

@@ -14,6 +14,7 @@ func NewProductControllerInterface(serviceInterface service.ProductDomainService
 type ProductControllerInterface interface {
 	CreateProduct(c *gin.Context)
 	FindProduct(c *gin.Context)
+	FindAllProducts(c *gin.Context)
 	UpdateProduct(c *gin.Context)
 	DeleteProduct(c *gin.Context)
 }

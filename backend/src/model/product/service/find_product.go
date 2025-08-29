@@ -18,3 +18,15 @@ func (pd *productDomainService) FindProductByIdServices(id string) (productModel
 
 	return product, nil
 }
+
+func (pd *productDomainService) FindAllProductsServices() ([]productModel.ProductDomainInterface, *rest_err.RestErr) {
+	log.Println("Iniciando FindAllProductsServices service")
+
+	products, err := pd.productRepository.FindAllProducts()
+	if err != nil {
+		log.Println("Erro ao buscar produtos no banco de dados: ", err)
+		return nil, err
+	}
+
+	return products, nil
+}

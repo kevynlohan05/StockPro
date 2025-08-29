@@ -42,3 +42,45 @@ func (pr *productRepository) FindProductById(productId string) (productModel.Pro
 
 	return converter.ConvertProductEntityToDomain(entity), nil
 }
+
+func (pr *productRepository) FindAllProducts() ([]productModel.ProductDomainInterface, *rest_err.RestErr) {
+	log.Println("Iniciando FindAllProducts repository")
+
+	query := `
+		SELECT id, name, description, mark, purchase_price, sale_price, image 
+		FROM products
+	`
+	rows, err := pr.db.Query(query)
+	if err != nil {
+		log.Println("Erro ao executar query: ", err)
+		return nil, rest_err.NewInternalServerError("Erro ao buscar produtos")
+	}
+	defer rows.Close()
+
+	var products []productModel.ProductDomainInterface
+
+	for rows.Next() {
+		var entity entity.ProductEntity
+		err := rows.Scan(
+			&entity.ID,
+			&entity.Name,
+			&entity.Description,
+			&entity.Mark,
+			&entity.PurchasePrice,
+			&entity.SalePrice,
+			&entity.Images,
+		)
+		if err != nil {
+			log.Println("Erro ao escanear resultado da query: ", err)
+			return nil, rest_err.NewInternalServerError("Erro ao buscar produtos")
+		}
+
+		products = append(products, converter.ConvertProductEntityToDomain(entity))
+	}
+
+	if len(products) == 0 {
+		return nil, rest_err.NewNotFoundError("Nenhum produto encontrado")
+	}
+
+	return products, nil
+}

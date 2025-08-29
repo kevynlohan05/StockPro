@@ -21,5 +21,6 @@ type ProductRepository interface {
 	CreateProduct(productDomain productModel.ProductDomainInterface) (productModel.ProductDomainInterface, *rest_err.RestErr)
 	UpdateProduct(productId string, productDomain productModel.ProductDomainInterface) *rest_err.RestErr
 	FindProductById(productId string) (productModel.ProductDomainInterface, *rest_err.RestErr)
+	FindAllProducts() ([]productModel.ProductDomainInterface, *rest_err.RestErr)
 	DeleteProduct(productId string) *rest_err.RestErr
 }

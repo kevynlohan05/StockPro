@@ -18,5 +18,6 @@ type ProductDomainService interface {
 	CreateProductServices(productModel.ProductDomainInterface) (productModel.ProductDomainInterface, *rest_err.RestErr)
 	UpdateProduct(productId string, productDomain productModel.ProductDomainInterface) *rest_err.RestErr
 	FindProductByIdServices(id string) (productModel.ProductDomainInterface, *rest_err.RestErr)
+	FindAllProductsServices() ([]productModel.ProductDomainInterface, *rest_err.RestErr)
 	DeleteProductServices(productId string) *rest_err.RestErr
 }
